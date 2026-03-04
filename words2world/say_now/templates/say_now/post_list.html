@@ -1,0 +1,27 @@
+{% extends "Base.html" %}
+
+{% block title %}
+Posts - Words2World
+{% endblock %}
+
+{% block content %}
+<h1>Posts</h1>
+
+<a href="{% url 'create_post' %}" class="btn btn-primary mb-3">Say Now</a>
+<div class="container row gap-3">
+    {% for post in posts %}
+    <div class="card" style="width: 18rem;">
+    {% if post.photo %}
+        <img src="{{ post.photo.url }}" class="card-img-top" alt="...">
+    {% endif %}
+    <div class="card-body">
+    <h5 class="card-title">{{ post.user.username }}</h5>
+    <p class="card-text">{{ post.content }}</p>
+    {% if post.user == user %}
+    <a href="{% url 'post_edit' post.id %}" class="btn btn-primary">Correction</a>
+    <a href="{% url 'post_delete' post.id %}" class="btn btn-danger">Take it Back</a>
+    {% endif %}
+    </div>
+</div>
+    {% endfor %}
+{% endblock %}
